@@ -8,14 +8,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Properties;
-
+import cj.cjgms.CJGMSClient;
 @Service
 public class ApiTestServiceImpl implements ApiTestService {
-
-    @Value("${dev.ip}")
-    private String dev_ip;
-    @Value("${dev.port}")
-    private String dev_port;
 
     Config cf = new Config();
     Properties prop = cf.readProperties("src/main/resources/properties/env.properties");
@@ -32,14 +27,21 @@ public class ApiTestServiceImpl implements ApiTestService {
 
     public HashMap<String, Object> reqTr931() {
         HashMap<String, Object> map = new HashMap<String, Object>();
+
         String dev_ip = prop.getProperty("dev.ip");
-        String dev_port = prop.getProperty("dev.port");
+        int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
 
+        TR000 trComm = new TR000();
         TR931 trData = new TR931();
-        String msg = trData.getMsg();
-
-
+        String reqData = trComm.getMsg() + trData.getMsg();
         System.out.println(dev_ip + " " + dev_port);
+        System.out.println("=====Request");
+        System.out.println(reqData);
+        CJGMSClient cjgmsClient = new CJGMSClient();
+        String strRet = cjgmsClient.CJGMSCall(dev_ip, dev_port, 5000, 5000, reqData);
+        System.out.println("=====Response");
+        System.out.println(strRet);
+        map.put("rslt", strRet);
 
         return map;
     }

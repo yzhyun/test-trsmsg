@@ -19,7 +19,7 @@ public class TR000 {
 
     private String msg = "";
 
-    public TR000(){
+    public TR000() {
         i_comm1      = StringUtils.rightPad(i_comm1   , arrLength[0], " ");
         i_comm2      = StringUtils.rightPad(i_comm2   , arrLength[1], " ");
         i_comm3      = StringUtils.rightPad(i_comm3   , arrLength[2], " ");
