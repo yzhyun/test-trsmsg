@@ -3,7 +3,6 @@ package com.cjone.apitest.service.impl;
 import com.cjone.apitest.common.Config;
 import com.cjone.apitest.config.trsmsg.*;
 import com.cjone.apitest.service.ApiTestService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -43,6 +42,18 @@ public class ApiTestServiceImpl implements ApiTestService {
         System.out.println(strRet);
         map.put("rslt", strRet);
 
+        return map;
+    }
+
+    public HashMap<String, Object> reqTr000() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+
+        String dev_ip = prop.getProperty("dev.ip");
+        int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
+
+        TR000 trComm = new TR000();
+        String msg = trComm.getMsg();
+        map.put("msg", msg);
         return map;
     }
 }

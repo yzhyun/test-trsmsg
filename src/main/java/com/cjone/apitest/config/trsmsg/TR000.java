@@ -1,47 +1,48 @@
 package com.cjone.apitest.config.trsmsg;
-import org.apache.commons.lang3.StringUtils;
+import com.cjone.apitest.common.*;
+
+import java.util.HashMap;
 
 public class TR000 {
 
-    private String i_comm1="931";       //전문유형
-    private String i_comm2="93";        //업무구분
-    private String i_comm3="V100";      //전문버젼
-    private String i_comm4="7000";      //제휴사코드
-    private String i_comm5="20240216";  //거래일자
-    private String i_comm6="190726";    //거래시간
-    private String i_comm7="";          //추적번호
-    private String i_comm8="ONL";       //채널유형
-    private String i_comm9="00000";     //응답코드
-    private String i_comm10="123451234512345";     //인가번호
-    private String i_comm11="";         //부가정보
-    private String i_comm12="";         //FILLER
-    private int [] arrLength = {3, 2, 4, 4, 8, 6, 18, 3, 5, 15, 20, 12};
+    private String i_comm1="803";                   //전문유형
+    private String i_comm2="81";                    //업무구분
+    private String i_comm3="V100";                  //전문버젼
+    private String i_comm4="7000";                  //제휴사코드
+    private String i_comm5="20240313";              //거래일자
+    private String i_comm6="190726";                //거래시간
+    private String i_comm7="";                      //추적번호
+    private String i_comm8="ONL";                   //채널유형
+    private String i_comm9="00000";                 //응답코드
+    private String i_comm10="123451234512345";      //인가번호
+    private String i_comm11="";                     //부가정보
+    private String i_comm12="";                     //FILLER
 
-    private String msg = "";
-
-    public TR000() {
-        i_comm1      = StringUtils.rightPad(i_comm1   , arrLength[0], " ");
-        i_comm2      = StringUtils.rightPad(i_comm2   , arrLength[1], " ");
-        i_comm3      = StringUtils.rightPad(i_comm3   , arrLength[2], " ");
-        i_comm4      = StringUtils.rightPad(i_comm4   , arrLength[3], " ");
-        i_comm5      = StringUtils.rightPad(i_comm5   , arrLength[4], " ");
-        i_comm6      = StringUtils.rightPad(i_comm6   , arrLength[5], " ");
-        i_comm7      = StringUtils.rightPad(i_comm7   , arrLength[6], " ");
-        i_comm8      = StringUtils.rightPad(i_comm8   , arrLength[7], " ");
-        i_comm9      = StringUtils.rightPad(i_comm9   , arrLength[8], " ");
-        i_comm10     = StringUtils.rightPad(i_comm10  , arrLength[9], " ");
-        i_comm11     = StringUtils.rightPad(i_comm11  , arrLength[10], " ");
-        i_comm12     = StringUtils.rightPad(i_comm12  , arrLength[11], " ");
-
-        msg = i_comm1 + i_comm2 + i_comm3 + i_comm4 + i_comm5 + i_comm6 + i_comm7 + i_comm8 + i_comm9 + i_comm10 + i_comm11 + i_comm12;
-
-    }
-
+    private String[][] format=
+            {
+                    {i_comm1, "3", "R", " ", "전문유형"},
+                    {i_comm2, "2", "R", " ", "업무구분"},
+                    {i_comm3, "4", "R", " ", "전문버전"},
+                    {i_comm4, "4", "R", " ", "제휴사코드"},
+                    {i_comm5, "8", "R", " ", "거래일자"},
+                    {i_comm6, "6", "R", " ", "거래시간"},
+                    {i_comm7, "18", "R", " ", "추적번호"},
+                    {i_comm8, "3", "R", " ", "채널유형"},
+                    {i_comm9, "5", "R", " ", "응답코드"},
+                    {i_comm10, "15", "R", " ", "인가번호"},
+                    {i_comm11, "20", "R", " ", "부가정보"},
+                    {i_comm12, "12", "R", " ", "FILLER"}
+            };
 
     public String getMsg(){
+        String msg="";
+        msg = common.setTrnMsg(format);
         return msg;
     }
 
-
-
+    public HashMap<String, Object> getForm(){
+        HashMap<String, Object> form = new HashMap<>();
+        form = common.getForm(format);
+        return form;
+    }
 }
