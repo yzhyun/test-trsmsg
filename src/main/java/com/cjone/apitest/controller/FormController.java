@@ -22,4 +22,7 @@ public class FormController {
 
     @RequestMapping(value="/getFormat/TR200", method = RequestMethod.GET)
     public HashMap<String, Object> getFormatTr200() { return FormService.getFormTr200(); }
+
+    @RequestMapping(value="/getFormat/TR931", method = RequestMethod.GET)
+    public HashMap<String, Object> getFormatTr931() { return FormService.getFormTr931(); }
 }

@@ -22,4 +22,11 @@ public class FormServiceImpl implements FormService {
         map = tr200.getForm();
         return map;
     }
+
+    public HashMap<String, Object> getFormTr931() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        TR931 tr931 = new TR931();
+        map = tr931.getForm();
+        return map;
+    }
 }

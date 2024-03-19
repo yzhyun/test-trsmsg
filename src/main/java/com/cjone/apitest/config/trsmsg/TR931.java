@@ -1,35 +1,40 @@
 package com.cjone.apitest.config.trsmsg;
+import com.cjone.apitest.common.common;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.HashMap;
+
 public class TR931 {
-    private String colsNm = "브랜드코드|가맹점코드|조회구분|조회구분값|조회시작일자|조회종료일자|요청페이지|Filler";
-    private String colsLen = "4|20|1|50|8|8|3|806";
-    private String brndCd="2501";
-    private String mchtNo="2501";
-    private String selFg="I";
-    private String selFgVal = "8880000000014";
-    private String fromdd = "20231228";
-    private String todd = "20240201";
-    private String pageVal="1";
-    private String filler ="";
+    private String i_1= "1000";
+    private String i_2= "0000";
+    private String i_3= "I";
+    private String i_4= "8880000000014";
+    private String i_5= "20231228";
+    private String i_6= "20240201";
+    private String i_7="1";
+    private String i_8="";
 
-    private String msg = "";
-    public TR931(){
-        String arrLength[] = colsLen.split("\\|");
+    private String[][] format=
+            {
+                {i_1 , "4" , "R", " ", "브랜드코드"	 },
+                {i_2 , "20", "R", " ", "가맹점코드"    },
+                {i_3 , "1" , "R", " ", "조회구분"      },
+                {i_4 , "50", "R", " ", "조회구분값"    } ,
+                {i_5 , "8" , "R", " ", "조회시작일자"   },
+                {i_6 , "8", "R", " ", "조회종료일자"   },
+                {i_7 , "3", "L", "0", "요청페이지"     },
+                {i_8 , "806", "R", " ", "Filler"       }
+            };
 
-        brndCd      = StringUtils.rightPad(brndCd   , Integer.valueOf(arrLength[0]), " ");
-        mchtNo      = StringUtils.rightPad(mchtNo   , Integer.valueOf(arrLength[1]), " ");
-        selFg       = StringUtils.rightPad(selFg    , Integer.valueOf(arrLength[2]), " ");
-        selFgVal    = StringUtils.rightPad(selFgVal , Integer.valueOf(arrLength[3]), " ");
-        fromdd      = StringUtils.rightPad(fromdd   , Integer.valueOf(arrLength[4]), " ");
-        todd        = StringUtils.rightPad(todd     , Integer.valueOf(arrLength[5]), " ");
-        pageVal     = StringUtils.leftPad(pageVal   , Integer.valueOf(arrLength[6]), "0");
-        filler      = StringUtils.rightPad(filler   , Integer.valueOf(arrLength[7]), " ");
-
-        msg = brndCd + mchtNo + selFg + selFgVal + fromdd + todd + pageVal + filler;
+    public String getMsg(){
+        String msg="";
+        msg = common.setTrnMsg(format);
+        return msg;
     }
 
-    public String getMsg(){return msg;}
-    public String getColNm() {return colsNm;}
-    public String getColLen() {return colsLen;}
+    public HashMap<String, Object> getForm(){
+        HashMap<String, Object> form = new HashMap<>();
+        form = common.getForm(format);
+        return form;
+    }
 }

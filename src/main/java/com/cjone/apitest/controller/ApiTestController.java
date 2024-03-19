@@ -16,18 +16,13 @@ public class ApiTestController {
         this.apiTestService = apiTestService;
     }
 
-    @RequestMapping(value="/getFormatTr931", method = RequestMethod.GET)
-    public HashMap<String, Object> getFormatTr931(){
-        return apiTestService.getFormatTr931();
+    @RequestMapping(value="/reqTr200", method = RequestMethod.GET)
+    public HashMap<String, Object> reqTr000(){
+        return apiTestService.reqTr200();
     }
 
     @RequestMapping(value="/reqTr931", method = RequestMethod.GET)
     public HashMap<String, Object> reqTr931(){
         return apiTestService.reqTr931();
-    }
-
-    @RequestMapping(value="/reqTr200", method = RequestMethod.GET)
-    public HashMap<String, Object> reqTr000(){
-        return apiTestService.reqTr200();
     }
 }
