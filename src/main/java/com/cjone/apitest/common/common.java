@@ -27,7 +27,6 @@ public class common {
             colNames += row[4]+ "^";
             testData += row[0] + "^";
             colSize += row[1] + "^";
-
         }
         map.put("colNames", colNames);
         map.put("colSize", colSize);

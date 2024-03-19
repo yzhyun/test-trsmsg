@@ -5,6 +5,6 @@ import java.util.HashMap;
 public interface ApiTestService {
     public HashMap<String, Object> getFormatTr931();
     public HashMap<String, Object> reqTr931();
-    public HashMap<String, Object> reqTr000();
+    public HashMap<String, Object> reqTr200();
 
 }
