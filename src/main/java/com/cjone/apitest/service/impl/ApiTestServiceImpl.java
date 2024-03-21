@@ -61,4 +61,28 @@ public class ApiTestServiceImpl implements ApiTestService {
         map.put("msg", strRet);
         return map;
     }
+
+    public HashMap<String, Object> reqTr300() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+
+        String dev_ip = prop.getProperty("dev.ip");
+        int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
+
+        TR000 trComm = new TR000();
+        String reqData = trComm.getMsg();
+
+        TR300 tr300 = new TR300();
+        reqData += tr300.getMsg();
+
+        System.out.println(dev_ip + " " + dev_port);
+        System.out.println("=====Request");
+        System.out.println(reqData);
+        CJGMSClient cjgmsClient = new CJGMSClient();
+        String strRet = cjgmsClient.CJGMSCall(dev_ip, dev_port, 5000, 5000, reqData);
+        System.out.println("=====Response");
+        System.out.println(strRet);
+
+        map.put("msg", strRet);
+        return map;
+    }
 }

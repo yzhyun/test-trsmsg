@@ -23,6 +23,13 @@ public class FormServiceImpl implements FormService {
         return map;
     }
 
+    public HashMap<String, Object> getFormTr300() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        TR300 tr300 = new TR300();
+        map = tr300.getForm();
+        return map;
+    }
+
     public HashMap<String, Object> getFormTr931() {
         HashMap<String, Object> map = new HashMap<String, Object>();
         TR931 tr931 = new TR931();

@@ -21,6 +21,11 @@ public class ApiTestController {
         return apiTestService.reqTr200();
     }
 
+    @RequestMapping(value="/reqTr300", method = RequestMethod.GET)
+    public HashMap<String, Object> reqTr300(){
+        return apiTestService.reqTr300();
+    }
+
     @RequestMapping(value="/reqTr931", method = RequestMethod.GET)
     public HashMap<String, Object> reqTr931(){
         return apiTestService.reqTr931();

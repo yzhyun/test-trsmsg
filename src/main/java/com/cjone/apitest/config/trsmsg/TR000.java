@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 public class TR000 {
 
-    private String i_1="931";                   //전문유형
-    private String i_2="93";                    //업무구분
+    private String i_1="300";                   //전문유형
+    private String i_2="31";                    //업무구분
     private String i_3="V100";                  //전문버젼
     private String i_4="7010";                  //제휴사코드
     private String i_5="20240313";              //거래일자
