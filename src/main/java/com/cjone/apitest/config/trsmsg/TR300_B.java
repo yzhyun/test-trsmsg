@@ -2,10 +2,11 @@ package com.cjone.apitest.config.trsmsg;
 import com.cjone.apitest.common.common;
 
 import java.util.HashMap;
-public class TR300 {
+
+public class TR300_B {
         // 필드 선언
-        private String i_1  = "3000";   // 브랜드코드
-        private String i_2  = "3000";   // 가맹점코드
+        private String i_1  = "1000";   // 브랜드코드
+        private String i_2  = "1000";   // 가맹점코드
         private String i_3  = "1";   // 회원식별구분코드
         private String i_4  = "7762020000057959";   // 회원식별구분값
 
@@ -20,12 +21,12 @@ public class TR300 {
         private String i_10 = "0";   // 멤버십할인금액
         private String i_11 = common.getDate();   // 결제일자
         private String i_12 = common.getDate();;   // 매출일자
-        private String i_13 = "1001";   // 거래사유코드
-        private String i_14 = "20240913";     // 원통합승인일자
-        private String i_15 = "1018737693";   // 원통합승인번호
-        private String i_16 = "BENE20240913174028";             // 원고유식별번호
-        private String i_17 = "dev";   // 사용자ID
-        private String i_18 = "TEST" + common.getDateTime();   // 참여사고유식별번호
+        private String i_13 = "1002";   // 거래사유코드
+        private String i_14 = "20240928";     // 원통합승인일자
+        private String i_15 = "1019048328";   // 원통합승인번호
+        private String i_16 = "BENE20240928193212";             // 원고유식별번호
+        private String i_17 = "devonepay";   // 사용자ID
+        private String i_18 = "BENE" + common.getDateTime();   // 참여사고유식별번호
         private String i_19 = "";   // 결제(주문)번호
         private String i_20 = "";   // 비고
         private String i_21 = "1";   // 사용총건수
@@ -60,36 +61,10 @@ public class TR300 {
 
                 };
 
-        private String[][] recv_format =
-                {
-                        {i_1, "3", "R", " ", "전문유형"},
-                        {i_2, "2", "R", " ", "업무구분"},
-                        {i_3, "4", "R", " ", "전문버전"},
-                        {i_4, "4", "R", " ", "제휴사코드"},
-                        {i_5, "8", "R", " ", "거래일자"},
-                        {i_6, "6", "R", " ", "거래시간"},
-                        {i_7, "18", "R", " ", "추적번호"},
-                        {i_8, "3", "R", " ", "채널유형"},
-                        {i_9, "5", "R", " ", "응답코드"},
-                        {i_10, "47", "R", " ", "FILLER"},
-                        {i_11, "100", "R", " ", "응답메세지"},
-                        {i_12, "150", "R", " ", "응답메세지2"},
-                        {i_13, "150", "R", " ", "응답메세지3"},
-                        {i_14, "8", "R", " ", "통합승인일자"},
-                        {i_15, "10", "R", " ", "통합승인번호"},
-                        {i_16, "10", "L", " ", "사용/사용취소포인트"},
-                        {i_17, "10", "L", " ", "가용포인트"},
-                        {i_18, "300", "R", " ", "FILLER"}
-                };
-
         public String getMsg(){
             String msg = "";
             msg = common.setTrnMsg(format);
             return msg;
-        }
-
-        public String[][] getRecvFormat(){
-                return recv_format;
         }
 
         public HashMap<String, Object> getForm(){
@@ -97,8 +72,6 @@ public class TR300 {
             form = common.getForm(format);
             return form;
         }
-
-
 }
 
 

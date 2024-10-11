@@ -26,8 +26,24 @@ public class ApiTestController {
         return apiTestService.reqTr300();
     }
 
+    @RequestMapping(value="/reqTr300_B", method = RequestMethod.GET)
+    public HashMap<String, Object> reqTr300_B(){
+        return apiTestService.reqTr300_B();
+    }
+
     @RequestMapping(value="/reqTr931", method = RequestMethod.GET)
     public HashMap<String, Object> reqTr931(){
         return apiTestService.reqTr931();
     }
+
+    @RequestMapping(value="/reqTr400", method = RequestMethod.GET)
+    public HashMap<String, Object> reqTr400(){
+        return apiTestService.reqTr400();
+    }
+
+    @RequestMapping(value="/reqCnclTr400", method = RequestMethod.GET)
+    public HashMap<String, Object> reqCnclTr400(){
+        return apiTestService.reqCnclTr400();
+    }
+
 }
