@@ -1,17 +1,16 @@
 package com.cjone.apitest.service.impl;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.cjone.apitest.common.Config;
 import com.cjone.apitest.common.common;
 import com.cjone.apitest.config.trsmsg.*;
 import com.cjone.apitest.service.ApiTestService;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-
-import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 import cj.cjgms.CJGMSClient;
+
 @Service
 public class ApiTestServiceImpl implements ApiTestService {
 
@@ -50,8 +49,8 @@ public class ApiTestServiceImpl implements ApiTestService {
 
         TR000 trComm = new TR000();
 
-        trComm.setMsg("i_1", "200");
-        trComm.setMsg("i_2", "21");
+        trComm.setMsg("c_1", "200");
+        trComm.setMsg("c_2", "21");
 
         String reqData = trComm.getMsg();
 
@@ -67,11 +66,35 @@ public class ApiTestServiceImpl implements ApiTestService {
         System.out.println("=====Response");
         System.out.println(strRet);
 
-        JSONObject jsonObject = common.getRecvMsg(tr.getRecvFormat(), strRet);
-        String parsedJsonString = jsonObject.toString(4);
-
+        map.put("data", common.getRecvMsg(tr.getRecvFormat(), strRet));
         map.put("msg", strRet);
-        map.put("parseJson", parsedJsonString);
+
+        return map;
+    }
+
+    public HashMap<String, Object> reqCnclTr300() {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+
+        String dev_ip = prop.getProperty("dev.ip");
+        int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
+
+        TR000 trComm = new TR000();
+        trComm.setMsg("c_1", "999");
+        trComm.setMsg("c_2", "32");
+        String reqData = trComm.getMsg();
+
+        TR300_C tr = new TR300_C();
+        reqData += tr.getMsg();
+
+        System.out.println(dev_ip + " " + dev_port);
+        System.out.println("=====Request");
+        System.out.println(reqData);
+        CJGMSClient cjgmsClient = new CJGMSClient();
+        String strRet = cjgmsClient.CJGMSCall(dev_ip, dev_port, 5000, 5000, reqData);
+        System.out.println("=====Response");
+        System.out.println(strRet);
+        map.put("data", common.getRecvMsg(tr.getRecvFormat(), strRet));
+        map.put("msg", strRet);
         return map;
     }
 
@@ -82,8 +105,8 @@ public class ApiTestServiceImpl implements ApiTestService {
         int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
 
         TR000 trComm = new TR000();
-        trComm.setMsg("i_1", "300");
-        trComm.setMsg("i_2", "31");
+        trComm.setMsg("c_1", "999");
+        trComm.setMsg("c_2", "31");
         String reqData = trComm.getMsg();
 
         TR300 tr = new TR300();
@@ -96,35 +119,26 @@ public class ApiTestServiceImpl implements ApiTestService {
         String strRet = cjgmsClient.CJGMSCall(dev_ip, dev_port, 5000, 5000, reqData);
         System.out.println("=====Response");
         System.out.println(strRet);
-        JSONObject jsonObject = common.getRecvMsg(tr.getRecvFormat(), strRet);
-        String parsedJsonString = jsonObject.toString(4);
-        System.out.println(parsedJsonString);
-        //System.out.println(parsedJsonString.replace("\\", "")); // ????? ?? ??
 
+        map.put("data", common.getRecvMsg(tr.getRecvFormat(), strRet));
         map.put("msg", strRet);
-        map.put("parseJson", parsedJsonString);
-        return map;
-    }
 
-    public HashMap<String, Object> test300() {
-        HashMap<String, Object> map = new HashMap<String, Object>();
-        String trMsg = "";
-        map.put("msg", "test");
+        System.out.println("원참여사고유식별번호=> " + tr.getUqeId());
+
+
 
         return map;
     }
 
     public HashMap<String, Object> reqTr400() {
+        System.out.println("===reqTR400/");
+
         HashMap<String, Object> map = new HashMap<String, Object>();
 
         String dev_ip = prop.getProperty("dev.ip");
         int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
 
-        TR000 trComm = new TR000();
-
-        trComm.setMsg("i_1", "400");
-        trComm.setMsg("i_2", "41");
-
+        TR000 trComm = new TR000("999", "41", "7030");
         String reqData = trComm.getMsg();
         System.out.println(reqData);
 
@@ -139,14 +153,38 @@ public class ApiTestServiceImpl implements ApiTestService {
         String strRet = cjgmsClient.CJGMSCall(dev_ip, dev_port, 5000, 5000, reqData);
         System.out.println("=====Response");
         System.out.println(strRet);
-        JSONObject jsonObject = common.getRecvMsg(tr.getRecvFormat(), strRet);
-        String parsedJsonString = jsonObject.toString(4);
-        System.out.println(parsedJsonString);
-        //System.out.println(parsedJsonString.replace("\\", "")); // ????? ?? ??
 
+        map.put("data", common.getRecvMsg(tr.getRecvFormat(), strRet));
         map.put("msg", strRet);
-        map.put("parseJson", parsedJsonString);
 
+        return map;
+    }
+
+    public HashMap<String, Object> reqTR400(HashMap<String, Object> requestData) {
+        HashMap<String, Object> map = new HashMap<String, Object>();
+        String log = requestData.toString();
+        System.out.println(("================== " +  log));
+
+        String reqData = "";
+        TR000 comm = new TR000(requestData);
+        reqData = comm.getMsg();
+        TR400 body = new TR400(requestData);
+        reqData += body.getMsg();
+
+        String dev_ip = prop.getProperty("dev.ip");
+        int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
+        System.out.println(dev_ip + " " + dev_port);
+        System.out.println("=====Request");
+        System.out.println(reqData);
+        CJGMSClient cjgmsClient = new CJGMSClient();
+        String strRet = cjgmsClient.CJGMSCall(dev_ip, dev_port, 5000, 5000, reqData);
+        System.out.println("=====Response");
+        System.out.println(strRet);
+
+        map.put("data", common.getRecvMsg(body.getRecvFormat(), strRet));
+        map.put("msg", strRet);
+
+        System.out.println(map);
         return map;
     }
 
@@ -156,10 +194,7 @@ public class ApiTestServiceImpl implements ApiTestService {
         String dev_ip = prop.getProperty("dev.ip");
         int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
 
-        TR000 trComm = new TR000();
-
-        trComm.setMsg("i_1", "400");
-        trComm.setMsg("i_2", "42");
+        TR000 trComm = new TR000("999", "42", "7030");
 
         String reqData = trComm.getMsg();
         System.out.println(reqData);
@@ -176,9 +211,6 @@ public class ApiTestServiceImpl implements ApiTestService {
         System.out.println("=====Response");
         System.out.println(strRet);
 
-        System.out.println("=======================================");
-        System.out.println(common.getDateTime());
-        System.out.println(common.getDate());
 
         map.put("msg", strRet);
         return map;
@@ -191,8 +223,8 @@ public class ApiTestServiceImpl implements ApiTestService {
         int dev_port = Integer.valueOf(prop.getProperty("dev.port"));
 
         TR000 trComm = new TR000();
-        trComm.setMsg("i_1", "999");
-        trComm.setMsg("i_2", "32");
+        trComm.setMsg("c_1", "999");
+        trComm.setMsg("c_2", "32");
         String reqData = trComm.getMsg();
 
         TR300_B tr = new TR300_B();

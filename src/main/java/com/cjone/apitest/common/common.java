@@ -8,6 +8,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -25,42 +26,52 @@ public class common {
         return msg;
     }
 
-    public static JSONObject getRecvMsg(String[][] format, String sMsg) {
-        JSONObject jsonObject = new JSONObject();
-
-        //Arrays.stream(format).sorted();
+    public static ArrayList<String[]> getRecvMsg(String[][] format, String sMsg) {
+        ArrayList<String[]> arrResData = new ArrayList<>();
         byte[] byteArray;
-        try{
+
+        try {
             byteArray = sMsg.getBytes("Windows-949");
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
         }
 
         int currentIndex = 0; // 현재 메시지에서 파싱할 시작 위치
-
+        int cnt = 1;
 
         for (String[] field : format) {
+            int fieldLength;
+            try {
+                fieldLength = Integer.parseInt(field[0]); // 필드의 길이
+            } catch (NumberFormatException e) {
+                throw new IllegalArgumentException("Invalid field length: " + field[0]);
+            }
 
-            int fieldLength = Integer.parseInt(field[1]); // 필드의 길이
-            String fieldName = field[4];                  // 필드 이름
+            // 메시지에서 잘라낼 범위가 유효한지 확인
 
-            // 메시지에서 해당 길이만큼 자르기
-            //String fieldValue = sMsg.substring(currentIndex, currentIndex + fieldLength).trim();
+            if (currentIndex + fieldLength > byteArray.length) {
+                break;
+            }
+
+            // 바이트 배열에서 해당 필드만큼 잘라내기
             byte[] fieldByteArray = Arrays.copyOfRange(byteArray, currentIndex, currentIndex + fieldLength);
             String fieldValue = null; // 바이트 배열을 문자열로 변환
+
             try {
                 fieldValue = new String(fieldByteArray, "Windows-949");
             } catch (UnsupportedEncodingException e) {
                 throw new RuntimeException(e);
             }
 
+            String[] arr = {"o_" + cnt, field[3], fieldValue.trim()};
+            arrResData.add(arr);
             currentIndex += fieldLength; // 다음 필드로 이동
 
-            System.out.println(field[4] + ":" + fieldValue);
-            // JSON 객체에 필드 값 추가
-            jsonObject.put(fieldName, fieldValue);
+            System.out.println(field[3] + ":" + fieldValue);
+
+            cnt += 1;
         }
-        return jsonObject;
+        return arrResData;
     }
 
     public static HashMap<String, Object> getForm(String[][] format){

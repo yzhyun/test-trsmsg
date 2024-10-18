@@ -2,11 +2,12 @@ package com.cjone.apitest.controller;
 
 import com.cjone.apitest.service.ApiTestService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.Map;
+
 
 @RestController
 public class ApiTestController {
@@ -26,6 +27,11 @@ public class ApiTestController {
         return apiTestService.reqTr300();
     }
 
+    @RequestMapping(value="/reqCnclTr300", method = RequestMethod.GET)
+    public HashMap<String, Object> reqCnclTr300(){
+        return apiTestService.reqCnclTr300();
+    }
+
     @RequestMapping(value="/reqTr300_B", method = RequestMethod.GET)
     public HashMap<String, Object> reqTr300_B(){
         return apiTestService.reqTr300_B();
@@ -39,6 +45,14 @@ public class ApiTestController {
     @RequestMapping(value="/reqTr400", method = RequestMethod.GET)
     public HashMap<String, Object> reqTr400(){
         return apiTestService.reqTr400();
+    }
+
+    @RequestMapping(value="/reqTR400", method = RequestMethod.POST)
+    public ResponseEntity<HashMap<String, Object>> reqTR400(
+            @RequestBody HashMap<String, Object> requestData) {
+        // Service로 비즈니스 로직 처리 요청
+        HashMap<String, Object> result = apiTestService.reqTR400(requestData);
+        return ResponseEntity.ok(result);
     }
 
     @RequestMapping(value="/reqCnclTr400", method = RequestMethod.GET)

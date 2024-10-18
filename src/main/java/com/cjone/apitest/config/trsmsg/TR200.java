@@ -144,9 +144,8 @@ public class TR200 {
         return recv_format;
     }
 
-    public HashMap<String, Object> getForm(){
-        HashMap<String, Object> form = new HashMap<>();
-        form = common.getForm(format);
+    public String[][] getForm(){
+        String[][] form = format.clone();
         return form;
     }
 

@@ -1,8 +1,7 @@
 package com.cjone.apitest.config.trsmsg;
 import com.cjone.apitest.common.common;
 
-import java.util.HashMap;
-public class TR300 {
+public class TR300_C {
         // 필드 선언
         private String i_1  = "3000";   // 브랜드코드
         private String i_2  = "3000";   // 가맹점코드
@@ -20,10 +19,10 @@ public class TR300 {
         private String i_10 = "0";   // 멤버십할인금액
         private String i_11 = common.getDate();   // 결제일자
         private String i_12 = common.getDate();;   // 매출일자
-        private String i_13 = "1001";   // 거래사유코드
-        private String i_14 = "20240913";     // 원통합승인일자
-        private String i_15 = "1018737693";   // 원통합승인번호
-        private String i_16 = "BENE20240913174028";             // 원고유식별번호
+        private String i_13 = "1002";   // 거래사유코드
+        private String i_14 = "20241017";     // 원통합승인일자
+        private String i_15 = "1019646298";   // 원통합승인번호
+        private String i_16 = "BENE20241017011905_yjh";             // 원고유식별번호
         private String i_17 = "dev300";   // 사용자ID
         private String i_18 = "BENE" + common.getDateTime() + "_yjh";   // 참여사고유식별번호
         private String i_19 = "";   // 결제(주문)번호
@@ -96,8 +95,6 @@ public class TR300 {
                 String[][] form = format.clone();
                 return form;
         }
-
-        public String getUqeId(){return i_18;}
 
 
 }
